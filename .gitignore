@@ -10,3 +10,10 @@
 /captures
 .externalNativeBuild
 libs/
+/app/debug/
+.idea/codeStyles/
+.idea/gradle.xml
+.idea/misc.xml
+.idea/runConfigurations.xml
+.idea/vcs.xml
+gradle/
