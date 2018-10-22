@@ -1,0 +1,1 @@
+com/teetaa/wx/lib/i/IFastRefreshLoadView
