@@ -2,19 +2,21 @@ package com.hhpost.courier.ui
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.renderscript.RenderScript
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+
 import com.hhpost.courier.Constants
 import com.hhpost.courier.R
+import com.hhpost.courier.R.id.sp_bg
 import com.hhpost.courier.UserCenter
 import com.hhpost.courier.entity.Splash
 import com.hhpost.courier.service.SplashDownLoadService
 import com.hhpost.courier.util.SerializableUtils
-import com.teetaa.wx.lib.FastManager
 import com.teetaa.wx.lib.basis.BasisActivity
 import com.teetaa.wx.lib.manager.GlideManager
 import com.teetaa.wx.lib.util.FastUtil
@@ -38,6 +40,7 @@ class SplashActivity: BasisActivity() {
 
     /*
      * 广告倒计时
+     *  起始时间为 5400 是因为 countDownTimer 有延迟
      */
     private val countDownTimer = object : CountDownTimer(5400, 1000) {
         override fun onTick(millisUntilFinished: Long) {
@@ -69,7 +72,7 @@ class SplashActivity: BasisActivity() {
      */
     private fun gotoLoginOrMainActivity() {
         countDownTimer.cancel()
-        if (UserCenter.getInstance().token == null) {
+        if (UserCenter.instance.token == null) {
             gotoLoginActivity()
         } else {
             gotoMainActivity()
@@ -81,7 +84,7 @@ class SplashActivity: BasisActivity() {
     /**
      * 前往Web页面
      */
-    fun gotoWebActivity(view: View) {
+    private fun gotoWebActivity() {
         if (mSplash?.click_url != null) {
             gotoLoginOrMainActivity()
             val bundle = Bundle()
@@ -94,6 +97,7 @@ class SplashActivity: BasisActivity() {
 
 
     private fun showAndDownSplash() {
+        sp_bg.setOnClickListener { gotoWebActivity() }
         showSplash()
         startImageDownLoad()
     }

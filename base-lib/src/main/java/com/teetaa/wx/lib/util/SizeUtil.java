@@ -1,7 +1,9 @@
 package com.teetaa.wx.lib.util;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 /**
  * WangXu ---- 梯台网络
@@ -74,6 +76,23 @@ public class SizeUtil {
     public static int sp2px(float spValue) {
         final float fontScale = getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
+    }
+
+
+
+    //    反射拿状态栏的高度
+    public static int getStatusHeight(Context context) {
+        int statusHeight = -1;
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
+            int height = Integer.parseInt(clazz.getField("status_bar_height").get(object).toString());
+            statusHeight = context.getResources().getDimensionPixelSize(height);
+            Log.i("TAG", "statusHeight:" + statusHeight);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return statusHeight;
     }
 
 }
